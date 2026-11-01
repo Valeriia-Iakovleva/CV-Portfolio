@@ -1,0 +1,17 @@
+---
+import { languages, type Language } from '../content/types';
+interface Props { currentLanguage: Language; label: string }
+const { currentLanguage, label } = Astro.props;
+const labels = { en: 'English', pl: 'Polski', uk: 'Українська' };
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<nav aria-label={label}>
+  <ul class="language-list">
+    {languages.map((language) => (
+      <li><a href={`${base}/${language}/`} lang={language} hreflang={language}
+        aria-current={language === currentLanguage ? 'page' : undefined}>
+        {labels[language]}
+      </a></li>
+    ))}
+  </ul>
+</nav>

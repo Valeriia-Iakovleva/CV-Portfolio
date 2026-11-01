@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+import { profile } from '../content/profile';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { languages, type Language, type PortfolioContent } from '../content/types';
+interface Props { language: Language; content: PortfolioContent }
+const { language, content } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang={language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={content.description} />
+    <title>{content.title}</title>
+    {languages.map((locale) => (
+      <link rel="alternate" hreflang={locale} href={new URL(`${base}/${locale}/`, Astro.site)} />
+    ))}
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <span class="wordmark">{profile.name}</span>
+        <LanguageSwitcher currentLanguage={language} label={content.languageNavigation} />
+      </header>
+      <main id="main"><slot /></main>
+    </div>
+  </body>
+</html>
