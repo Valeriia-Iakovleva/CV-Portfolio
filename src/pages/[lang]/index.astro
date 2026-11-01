@@ -1,4 +1,5 @@
 ---
+import { profile } from '../../content/profile';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import en from '../../content/en';
 import pl from '../../content/pl';
@@ -13,11 +14,13 @@ const content = { en, pl, uk }[language];
 ---
 <BaseLayout language={language} content={content}>
   <section class="introduction" aria-labelledby="name">
-    <h1 id="name">{content.name}</h1>
-    <p class="role">{content.currentRole}<br /><span>{content.employer}</span></p>
+    <p class="eyebrow">{content.introductionLabel}</p>
+    <h1 id="name">{profile.name}</h1>
+    <p class="role">{profile.currentRole}<br /><span>{profile.employer}</span></p>
     <div class="biography">
       <p>{content.introduction}</p>
-      <p>{content.direction}</p>
+
     </div>
+    <a class="profile-link" href={profile.github}>{content.githubLabel}<span aria-hidden="true"> ↗</span></a>
   </section>
 </BaseLayout>

@@ -1,13 +1,11 @@
 import type { PortfolioContent } from './types';
+import { profile } from './profile';
 
 export default {
-  title: 'Valeriia Iakovleva — CV & Portfolio',
-  description: 'Meet Valeriia Iakovleva, Data Maintenance Specialist with a Computer Science background.',
-  languageNavigation: 'Choose language',
-  introductionLabel: 'CV & Portfolio',
-  name: 'Valeriia Iakovleva',
-  currentRole: 'Data Maintenance Specialist',
-  employer: 'Dentons Business Services EMEA',
-  introduction: 'I have a Computer Science background and work as a Data Maintenance Specialist at Dentons Business Services EMEA. Previously, I held the role of Junior Data Maintenance Specialist.',
-  direction: 'I am working towards a career in digital solutions engineering, with solution architecture as a longer-term ambition.',
+  title: `${profile.name} — CV & Portfolio`,
+  description: "I work with business data, processes, and automation at Dentons. With a Computer Science background, I’m developing toward digital solutions engineering.",
+  languageNavigation: "Choose language",
+  introductionLabel: "CV & Portfolio",
+  introduction: "I work with business data, processes, and automation at Dentons. With a Computer Science background, I’m developing toward digital solutions engineering.",
+  githubLabel: "My GitHub profile",
 } satisfies PortfolioContent;

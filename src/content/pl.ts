@@ -1,13 +1,11 @@
 import type { PortfolioContent } from './types';
+import { profile } from './profile';
 
 export default {
-  title: 'Valeriia Iakovleva — CV i portfolio',
-  description: 'Poznaj Valeriię Iakovlevą, specjalistkę ds. utrzymania danych z wykształceniem informatycznym.',
-  languageNavigation: 'Wybierz język',
-  introductionLabel: 'CV i portfolio',
-  name: 'Valeriia Iakovleva',
-  currentRole: 'Specjalistka ds. utrzymania danych',
-  employer: 'Dentons Business Services EMEA',
-  introduction: 'Mam wykształcenie informatyczne i pracuję jako specjalistka ds. utrzymania danych w Dentons Business Services EMEA. Wcześniej zajmowałam stanowisko młodszej specjalistki ds. utrzymania danych.',
-  direction: 'Chcę rozwijać się w kierunku inżynierii rozwiązań cyfrowych, a moją długoterminową ambicją jest architektura rozwiązań.',
+  title: `${profile.name} — CV i portfolio`,
+  description: "Pracuję z danymi biznesowymi, procesami i automatyzacją w Dentons. Mam wykształcenie informatyczne i rozwijam się w kierunku inżynierii rozwiązań cyfrowych.",
+  languageNavigation: "Wybierz język",
+  introductionLabel: "CV i portfolio",
+  introduction: "Pracuję z danymi biznesowymi, procesami i automatyzacją w Dentons. Mam wykształcenie informatyczne i rozwijam się w kierunku inżynierii rozwiązań cyfrowych.",
+  githubLabel: "Mój profil na GitHubie",
 } satisfies PortfolioContent;
