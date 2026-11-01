@@ -1,0 +1,32 @@
+/* System fonts keep this foundation independent of external font services. */
+:root {
+  color-scheme: light;
+  --paper: #FFFCF7;
+  --ink: #292724;
+  --muted: #68615A;
+  --accent: #B94B20;
+  --highlight: #FFF0E5;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  line-height: 1.65;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+.page { max-width: 1120px; margin: 0 auto; padding: 2rem clamp(1.25rem, 5vw, 4rem) 5rem; }
+.site-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: 1.5rem; border-bottom: 1px solid #ddd4ca; }
+.eyebrow { color: var(--muted); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+.language-list { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin: 0; padding: 0; list-style: none; }
+a { color: var(--accent); text-underline-offset: .25em; }
+.language-list a { display: inline-block; padding: .5rem .15rem; }
+a[aria-current="page"] { color: var(--ink); text-decoration-thickness: 2px; }
+a:hover { background: var(--highlight); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.introduction { padding-top: clamp(3rem, 9vw, 7rem); max-width: 780px; }
+h1, h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; line-height: 1.1; }
+h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 0 0 2rem; letter-spacing: -.035em; }
+.role { font-size: 1.15rem; color: var(--accent); margin-bottom: 2.5rem; }
+.role span { color: var(--muted); font-size: 1rem; }
+.biography { max-width: 65ch; font-size: 1.075rem; }
+.biography p { margin: 0 0 1.25rem; }
