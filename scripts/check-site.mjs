@@ -30,8 +30,8 @@ async function outputPath(url) {
 const entry = await read(resolve(root, "index.html"));
 assert.match(
   entry,
-  /http-equiv="refresh"[^>]*content="[^"]*url=\/CV-Portfolio\/en\//i,
-  "Entry must redirect to English",
+  /http-equiv="refresh"[^>]*content="0;url=\/CV-Portfolio\/en\//i,
+  "Entry must redirect instantly to English",
 );
 let referenceTitles;
 for (const language of languages) {
@@ -130,3 +130,4 @@ for (const directory of ["dist", "src", "public", "docs"])
 console.log(
   "Site checks passed: English redirect, three locales, shared titles, navigation, assets, anchors, and contact privacy.",
 );
+

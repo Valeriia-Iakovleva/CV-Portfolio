@@ -18,6 +18,7 @@ Open the printed development address under `/CV-Portfolio/`. That entry redirect
 npm run check             # Astro and TypeScript diagnostics
 npm run build             # generate dist/
 npm run test:site         # check the generated output; run after building
+npm run test:html         # validate HTML and accessibility markup
 npm run preview           # serve the production build
 ```
 
@@ -49,7 +50,9 @@ Contact is GitHub-only. Do not add personal phone numbers, email addresses, priv
 
 ## Validation and print
 
-`test:site` checks the English redirect, locale pages and active navigation, matching official titles, unique IDs, local link targets, section anchors, base-prefixed scripts/styles/favicon, and absence of email addresses or personal contact URLs in source and output. It does not replace browser, accessibility, translation, or external-link review.
+`test:html` validates all generated pages against html-validate’s standard, accessibility, and document presets, with zero warnings allowed. Integrity checks apply to cross-origin resources. This is markup validation, not a complete WCAG audit.
+
+`test:site` checks the instant English redirect, locale pages and active navigation, matching official titles, unique IDs, local link targets, section anchors, base-prefixed scripts/styles/favicon, and absence of email addresses or personal contact URLs in source and output. It does not replace browser, accessibility, translation, or external-link review.
 
 The Print / save as PDF button uses browser printing. Print CSS sets A4 margins, keeps project summaries and evidence links, hides controls and detailed case studies, and avoids splitting individual roles or the contact section. No generated PDF is committed as a current downloadable CV. Browser/PDF results and screenshots are recorded in [docs/QA.md](docs/QA.md).
 
@@ -57,6 +60,7 @@ The Print / save as PDF button uses browser printing. Print CSS sets A4 margins,
 
 The site is hosted at https://valeriia-iakovleva.github.io/CV-Portfolio/ . `astro.config.mjs` defines the origin, `/CV-Portfolio` base, and trailing slashes. Update the configuration and regression-check expectations together if moving it.
 
-`.github/workflows/pages.yml` installs with `npm ci`, checks types, builds, and checks the generated site on PRs and `main`. PRs do not upload a Pages artifact or deploy. The deploy job runs only for `main`, with Pages and identity write permissions confined to that job; the build needs only repository read access. Manual workflow runs on feature branches cannot deploy. Pages must be configured to use GitHub Actions.
+`.github/workflows/pages.yml` installs with `npm ci`, checks types, builds, checks the generated site, and validates HTML on PRs and `main`. PR and feature-branch manual runs upload a `cv-review-<run ID>` artifact containing `dist/`, QA notes, and the committed screenshots for 14 days. Download it from the Actions run page; it is a review bundle, not a hosted preview. Serve its `dist/` under `/CV-Portfolio/` to retain correct asset paths. PRs do not upload a Pages artifact or deploy. The deploy job runs only for `main`, with Pages and identity write permissions confined to that job; the build needs only repository read access. Manual workflow runs on feature branches cannot deploy. Pages must be configured to use GitHub Actions.
 
 Source on a review branch is not live until merged and successfully deployed. Review this CV expansion before merging; no merge or production deployment is part of the maintenance work.
+

@@ -31,6 +31,28 @@ jobs:
       - run: npm run check
       - run: npm run build
       - run: npm run test:site
+      - run: npm run test:html
+      - name: Upload tested branch output
+        if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: cv-review-${{ github.run_id }}
+          path: |
+            dist/
+            docs/QA.md
+            docs/screenshots/
+          retention-days: 14
+          if-no-files-found: error
+      - name: Write review summary
+        if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
+        run: |
+          cat <<'MARKDOWN' >> "$GITHUB_STEP_SUMMARY"
+          ## CV branch review
+          - Astro/TypeScript, production build, site regression checks, and HTML/accessibility markup validation passed.
+          - The review artifact contains the tested static site and documented visual evidence.
+          - This run does not merge the PR or deploy the branch to production.
+          - Automated checks are not a complete WCAG audit; manual testing limits are recorded in docs/QA.md.
+          MARKDOWN
       - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request'
         with:
@@ -52,3 +74,4 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+

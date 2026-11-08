@@ -61,3 +61,17 @@ Updated checkout and setup-node to v7 and upload-pages-artifact to v5 after read
 References: [checkout v7](https://github.com/actions/checkout/tree/v7), [setup-node v7](https://github.com/actions/setup-node/tree/v7), [upload-pages-artifact v5](https://github.com/actions/upload-pages-artifact/tree/v5).
 
 Screen readers, physical printing/devices, Firefox, and Safari were not tested. Translation/editorial approval and the existing factual review items remain with the owner. External project evidence is the real public repository, production site, and merged PR #1; employer work has no public artifact. No merge or production deployment was performed.
+
+
+## Branch artifact and standards checks — 8 November 2026
+
+This follow-up validates the current PR branch without merging or deploying it.
+
+- Added the development-only `html-validate` 11.19.0 dependency and `npm run test:html`. All four production HTML files pass the standard, accessibility, and document presets with zero warnings. Integrity checks apply to cross-origin resources; the site’s hashed CSS is served from the same origin.
+- The validator identified the generated entry redirect’s two-second delay. Changed it to a permanent static redirect with zero delay and added an instant-redirect regression assertion.
+- Added a GitHub Actions review artifact, `cv-review-<run ID>`, containing the tested static output, these QA notes, and existing screenshots, retained for 14 days. The job summary explains the checks and limits. Production deployment remains restricted to main; PR runs never deploy.
+- Chromium browser review of the production output: English, Polish, and Ukrainian at frame widths 320, 390, 768, and 1440 pixels have no horizontal document overflow. Scrollbars reduce each content width by 15 pixels. Each page has one H1 and the correct document language. Desktop and mobile layouts were visually inspected. Frames test responsive layout, not physical devices.
+- First Tab reaches the skip link; Enter focuses main. A native project disclosure opens with Enter and closes with Space. Switching English to Polish preserves `#projects`. The root redirect reaches English.
+- Browser logs inspected during this review contained extension-origin metadata errors, with no site-origin warning/error entries.
+
+The earlier print, no-JavaScript, and reduced-motion results above are from the preceding maintenance review; they were not rerun in this follow-up. HTML/accessibility markup validation is not a complete WCAG conformance assessment. Screen readers, Safari, Firefox, and physical devices remain untested. No design or career-content changes were made in this follow-up.
