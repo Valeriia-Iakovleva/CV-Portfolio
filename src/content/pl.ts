@@ -32,7 +32,6 @@ export default {
     print: "Drukuj / zapisz jako PDF",
     present: "obecnie",
     current: "Obecne stanowisko",
-    previous: "Wcześniej Junior Data Maintenance Specialist",
     experienceIntro:
       "Stanowiska i obowiązki, które ukształtowały moje podejście do rozwiązywania problemów.",
     experienceTitle: "Doświadczenie zawodowe",
@@ -58,7 +57,6 @@ export default {
     duration: "Staż",
     contactTitle: "Porozmawiajmy.",
     contactText: "O moim doświadczeniu, projektach i rozwiązaniach cyfrowych.",
-    email: "Napisz do mnie",
     footer: "Osobiste CV i portfolio",
     statusNote: "",
     ongoingWebsite: "Opublikowana podstawa · rozwijam CV i portfolio",

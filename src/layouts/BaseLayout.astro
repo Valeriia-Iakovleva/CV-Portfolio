@@ -43,9 +43,13 @@ const currentURL = new URL(`${base}/${language}/`, Astro.site);
     <script>
       const printButton = document.querySelector<HTMLButtonElement>('[data-print]');
       if (printButton) { printButton.hidden = false; printButton.addEventListener('click', () => window.print()); }
-      document.querySelectorAll<HTMLAnchorElement>('.language-list a').forEach(link => {
-        link.addEventListener('click', () => { link.hash = window.location.hash; });
-      });
+      const syncLanguageAnchors = () => {
+        document.querySelectorAll<HTMLAnchorElement>('.language-list a').forEach(link => {
+          link.hash = window.location.hash;
+        });
+      };
+      syncLanguageAnchors();
+      window.addEventListener('hashchange', syncLanguageAnchors);
     </script>
   </body>
 </html>

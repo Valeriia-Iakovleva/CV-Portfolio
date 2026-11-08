@@ -1,6 +1,7 @@
 /* Native font stacks support Latin and Cyrillic without remote font requests. */
 :root {
   color-scheme: light;
+  font-size: 16px;
   --paper: #fffcf7;
   --ink: #292724;
   --muted: #68615a;
@@ -100,12 +101,13 @@ button[hidden] {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 .language-list a {
   display: inline-block;
   color: var(--muted);
-  padding: 8px 0;
+  padding: 10px 4px;
+  min-height: 44px;
   text-decoration: none;
 }
 .language-list a[aria-current="page"] {
@@ -119,14 +121,16 @@ button[hidden] {
 }
 .section-nav {
   display: flex;
-  gap: 30px;
-  padding-top: 15px;
-  font-size: 13px;
+  gap: 12px 30px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  font-size: 14px;
 }
 .section-nav a {
   color: var(--muted);
   text-decoration: none;
-  padding: 4px 0;
+  padding: 10px 0;
+  min-height: 44px;
 }
 .section-nav a:hover {
   color: var(--accent);
@@ -203,7 +207,7 @@ h1 {
   background: var(--accent);
   border: 1px solid var(--accent);
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
   min-height: 46px;
 }
@@ -212,7 +216,7 @@ h1 {
   text-decoration: none;
 }
 .text-link {
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -233,7 +237,7 @@ h1 {
   letter-spacing: -0.6px;
 }
 .focus-note > p:not(.eyebrow) {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--muted);
   line-height: 1.9;
   margin-top: 17px;
@@ -319,7 +323,7 @@ h1 {
   line-height: 1.5;
 }
 .role-summary {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--muted);
   margin-top: 7px;
 }
@@ -332,7 +336,7 @@ h1 {
 .experience-copy > ul:not(.tags) {
   padding-left: 18px;
   margin: 17px 0 20px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.9;
 }
 .experience-copy > ul:not(.tags) > li {
@@ -351,7 +355,7 @@ h1 {
   gap: 7px;
 }
 .tags li {
-  font-size: 10px;
+  font-size: 12px;
   padding: 4px 9px;
   line-height: 1.7;
   background: #f5eee5;
@@ -373,7 +377,7 @@ h1 {
   margin-top: 33px;
 }
 .project-entry {
-  background: #fff9f1;
+  background: transparent;
   border: 1px solid var(--line);
   padding: 27px 31px;
 }
@@ -398,7 +402,7 @@ h1 {
   font-size: 11px;
   line-height: 1.5;
   color: var(--muted);
-  white-space: nowrap;
+  flex-shrink: 0;
 }
 .project-status > span {
   color: var(--accent);
@@ -406,6 +410,8 @@ h1 {
 }
 .project-status.completed {
   color: var(--accent);
+  background: var(--highlight);
+  padding: 3px 8px;
 }
 .project-entry > h3 {
   font-family: var(--serif);
@@ -415,7 +421,7 @@ h1 {
   font-weight: 400;
 }
 .project-summary {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--muted);
   line-height: 1.85;
   margin-top: 12px;
@@ -431,9 +437,9 @@ h1 {
   margin-top: 23px;
 }
 .project-details > summary {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--accent);
-  padding: 16px 0 0;
+  padding: 14px 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -467,6 +473,9 @@ h1 {
 details[open] .details-icon:after {
   display: none;
 }
+.experience-copy {
+  max-width: 72ch;
+}
 .case-study {
   padding-top: 3px;
   max-width: 780px;
@@ -479,7 +488,7 @@ details[open] .details-icon:after {
 }
 .case-study p,
 .case-study li {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--muted);
   line-height: 1.85;
 }
@@ -495,8 +504,12 @@ details[open] .details-icon:after {
   align-items: center;
   gap: 22px;
   flex-wrap: wrap;
-  margin-top: 23px;
-  font-size: 12px;
+  margin-top: 15px;
+  font-size: 14px;
+}
+.project-links a {
+  padding-block: 10px;
+  min-height: 44px;
 }
 .status-note {
   color: var(--muted);
@@ -511,7 +524,7 @@ details[open] .details-icon:after {
   gap: 64px;
 }
 .about-copy p {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--muted);
   line-height: 1.9;
   margin-bottom: 18px;
@@ -520,7 +533,7 @@ details[open] .details-icon:after {
   border-left: 1px solid var(--line);
   padding-left: 30px;
 }
-.education h3 {
+.education h4 {
   font-family: var(--serif);
   font-weight: 400;
   font-size: 23px;
@@ -529,15 +542,15 @@ details[open] .details-icon:after {
 }
 .education > p:not(.eyebrow) {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 16px;
   margin-top: 8px;
   line-height: 1.8;
 }
 .education .education-track {
-  color: var(--ink) !important;
+  color: var(--ink);
 }
 .education .education-topics {
-  font-size: 12px !important;
+  font-size: 14px;
 }
 .skills-block {
   margin-top: 39px;
@@ -562,7 +575,7 @@ details[open] .details-icon:after {
   line-height: 1.6;
 }
 .skills-grid p {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--muted);
   line-height: 1.85;
   margin-top: 10px;
@@ -605,21 +618,17 @@ details[open] .details-icon:after {
   gap: 31px;
   flex-wrap: wrap;
 }
-.contact-email {
-  font-family: var(--serif);
-  font-size: 27px;
-  letter-spacing: -0.4px;
-}
-.contact-actions > a:not(.contact-email) {
-  font-size: 13px;
+.contact-actions > a {
+  font-size: 14px;
 }
 .print-button {
+  min-height: 44px;
   display: inline-flex;
   gap: 18px;
   background: transparent;
   border: 1px solid var(--line);
   padding: 10px 15px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   margin: 26px 0 0 39px;
 }
@@ -633,7 +642,7 @@ details[open] .details-icon:after {
   gap: 20px;
   padding: 24px 0 28px;
   border-top: 1px solid var(--line);
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .site-footer p > span {
@@ -684,9 +693,6 @@ details[open] .details-icon:after {
   .skills-grid {
     gap: 18px;
   }
-  .contact-email {
-    font-size: 24px;
-  }
 }
 @media (max-width: 720px) {
   .page {
@@ -700,11 +706,11 @@ details[open] .details-icon:after {
   }
   .language-list {
     gap: 13px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .section-nav {
     gap: 25px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .introduction {
     grid-template-columns: 1fr;
@@ -728,7 +734,7 @@ details[open] .details-icon:after {
   }
   .focus-note > p:not(.eyebrow) {
     margin-top: 12px;
-    font-size: 14px;
+    font-size: 16px;
   }
   .focus-note > a {
     margin-top: 14px;
@@ -777,7 +783,7 @@ details[open] .details-icon:after {
     gap: 23px;
   }
   .skills-grid p {
-    font-size: 14px;
+    font-size: 16px;
   }
   .languages-block dl {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -790,7 +796,7 @@ details[open] .details-icon:after {
     font-size: 26px;
   }
   .project-summary {
-    font-size: 14px;
+    font-size: 16px;
   }
   .project-header {
     gap: 15px;
@@ -800,9 +806,6 @@ details[open] .details-icon:after {
     align-items: flex-start;
     flex-direction: column;
     gap: 14px;
-  }
-  .site-footer {
-    font-size: 9px;
   }
 }
 @media (max-width: 430px) {
@@ -816,17 +819,15 @@ details[open] .details-icon:after {
     padding-bottom: 15px;
   }
   .language-list {
-    font-size: 12px;
-    gap: 20px;
+    gap: 12px;
   }
   .site-header > nav {
-    align-self: flex-end;
+    align-self: flex-start;
   }
   .section-nav {
-    gap: 18px;
-    justify-content: space-between;
+    gap: 4px 18px;
     flex-wrap: wrap;
-    font-size: 11px;
+    font-size: 14px;
     padding-top: 12px;
   }
   h1 {
@@ -849,7 +850,7 @@ details[open] .details-icon:after {
     margin-top: 3px;
   }
   .intro-text {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.85;
   }
   .hero-actions {
@@ -857,12 +858,12 @@ details[open] .details-icon:after {
     margin-top: 25px;
   }
   .button {
-    font-size: 12px;
+    font-size: 14px;
     padding: 12px 14px;
     gap: 12px;
   }
   .text-link {
-    font-size: 12px;
+    font-size: 14px;
     gap: 10px;
   }
   .focus-note h2 {
@@ -882,7 +883,7 @@ details[open] .details-icon:after {
     padding-top: 5px;
   }
   .experience-copy > ul:not(.tags) {
-    font-size: 13px;
+    font-size: 16px;
   }
   .project-header {
     flex-direction: column;
@@ -900,24 +901,20 @@ details[open] .details-icon:after {
   }
   .case-study p,
   .case-study li {
-    font-size: 13px;
+    font-size: 16px;
   }
   .project-links {
     gap: 13px 20px;
-    font-size: 11px;
-  }
-  .about-copy p {
     font-size: 14px;
   }
-  .education h3 {
+  .about-copy p {
+    font-size: 16px;
+  }
+  .education h4 {
     font-size: 22px;
   }
   .contact-actions {
     margin-left: 0;
-  }
-  .contact-email {
-    font-size: 24px;
-    overflow-wrap: anywhere;
   }
   .print-button {
     margin-left: 0;
@@ -932,9 +929,6 @@ details[open] .details-icon:after {
   .languages-block dd {
     font-size: 11px;
   }
-  .tags li {
-    font-size: 10px;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -942,6 +936,10 @@ details[open] .details-icon:after {
   }
 }
 @media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
   html {
     scroll-behavior: auto;
   }
@@ -956,7 +954,8 @@ details[open] .details-icon:after {
   .site-header {
     padding-bottom: 10px;
   }
-  .site-header > nav,
+  .site-header,
+  .overline,
   .section-nav,
   .hero-actions,
   .focus-note,
@@ -988,7 +987,7 @@ details[open] .details-icon:after {
     max-width: none;
   }
   .cv-section {
-    padding: 22px 0;
+    padding: 18px 0;
   }
   .section-heading {
     margin-bottom: 20px;
@@ -1039,10 +1038,28 @@ details[open] .details-icon:after {
     font-size: 11px;
   }
   .project-details,
-  .project-links,
   .status-note,
   .project-entry .tags {
     display: none;
+  }
+  .project-links {
+    font-size: 9px;
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .project-links a {
+    padding: 0;
+    min-height: 0;
+  }
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
   }
   .project-header {
     margin-bottom: 7px;
@@ -1059,8 +1076,21 @@ details[open] .details-icon:after {
   .education > p:not(.eyebrow) {
     font-size: 10px;
   }
-  .education h3 {
+  .education h4 {
     font-size: 16px;
+  }
+  .skills-block,
+  .languages-block {
+    margin-top: 22px;
+  }
+  .subheading {
+    margin-bottom: 12px;
+  }
+  .contact-section {
+    break-inside: avoid;
+  }
+  .contact-section .section-heading {
+    margin-bottom: 12px;
   }
   .skills-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1087,9 +1117,6 @@ details[open] .details-icon:after {
   .contact-actions {
     margin-left: 0;
     flex-direction: row;
-  }
-  .contact-email {
-    font-size: 18px;
   }
   .site-footer {
     padding-block: 15px;

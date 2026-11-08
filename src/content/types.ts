@@ -3,6 +3,22 @@ export type Language = (typeof languages)[number];
 export type ExperienceId = "dentons" | "pontera" | "worknest" | "epam";
 export type ProjectId = "daily-report" | "follow-up" | "portfolio";
 export type SkillId = "automation" | "data" | "collaboration";
+export interface ExperienceFact {
+  id: ExperienceId;
+  title: string;
+  employer: string;
+  start: string;
+  end: string | null;
+  tools: readonly string[];
+}
+export interface ProjectFact {
+  id: ProjectId;
+  status: "completed" | "in-progress";
+  tools: readonly string[];
+  repo: string | null;
+  pullRequest: string | null;
+  live: string | null;
+}
 export interface ExperienceCopy {
   summary: string;
   bullets: string[];
@@ -37,7 +53,6 @@ export interface PortfolioContent {
     print: string;
     present: string;
     current: string;
-    previous: string;
     experienceIntro: string;
     experienceTitle: string;
     educationTitle: string;
@@ -61,7 +76,6 @@ export interface PortfolioContent {
     duration: string;
     contactTitle: string;
     contactText: string;
-    email: string;
     footer: string;
     statusNote: string;
     ongoingWebsite: string;

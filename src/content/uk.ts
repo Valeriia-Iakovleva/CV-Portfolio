@@ -32,7 +32,6 @@ export default {
     print: "Друк / зберегти як PDF",
     present: "дотепер",
     current: "Поточна посада",
-    previous: "Раніше Junior Data Maintenance Specialist",
     experienceIntro:
       "Посади й обов’язки, які сформували мій підхід до розв’язання проблем.",
     experienceTitle: "Досвід роботи",
@@ -58,7 +57,6 @@ export default {
     duration: "Стажування",
     contactTitle: "Поговорімо.",
     contactText: "Про мій досвід, проєкти та цифрові рішення.",
-    email: "Написати мені",
     footer: "Особисте резюме та портфоліо",
     statusNote: "",
     ongoingWebsite: "Основу опубліковано · розширюю резюме та портфоліо",

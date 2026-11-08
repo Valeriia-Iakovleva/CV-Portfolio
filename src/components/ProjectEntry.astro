@@ -1,12 +1,10 @@
 ---
 import Arrow from './Arrow.astro';
-import { profile, projectFacts } from '../content/profile';
-import type { Language, PortfolioContent, ProjectId } from '../content/types';
-interface Props { id: ProjectId; content: PortfolioContent; language: Language; }
-const { id, content, language } = Astro.props;
+import type { PortfolioContent, ProjectFact } from '../content/types';
+interface Props { facts: ProjectFact; content: PortfolioContent; }
+const { facts, content } = Astro.props;
+const { id } = facts;
 const copy = content.projects[id];
-const facts = projectFacts.find(project => project.id === id)!;
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <article class="project-entry" id={`project-${id}`}>
   <div class="project-header">
@@ -29,9 +27,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <h4>{content.ui.scope}</h4><p>{copy.limitation}</p>
     </div>
   </details>
-  {facts.repo && <div class="project-links">
-    <a href={facts.repo}>{content.ui.viewSource}<Arrow /></a>
-    <a href={profile.foundationPR}>{content.ui.viewPR} #1<Arrow /></a>
-    <a href={`${base}/${language}/`}>{content.ui.viewLive}<Arrow /></a>
+  {(facts.repo || facts.pullRequest || facts.live) && <div class="project-links">
+    {facts.repo && <a href={facts.repo}>{content.ui.viewSource}<Arrow /></a>}
+    {facts.pullRequest && <a href={facts.pullRequest}>{content.ui.viewPR} #{facts.pullRequest.split('/').at(-1)}<Arrow /></a>}
+    {facts.live && <a href={facts.live}>{content.ui.viewLive}<Arrow /></a>}
   </div>}
 </article>

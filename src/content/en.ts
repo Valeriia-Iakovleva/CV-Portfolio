@@ -32,7 +32,6 @@ export default {
     print: "Print / save as PDF",
     present: "Present",
     current: "Current role",
-    previous: "Previously Junior Data Maintenance Specialist",
     experienceIntro:
       "The roles and responsibilities that shaped how I approach a problem.",
     experienceTitle: "Work experience",
@@ -59,7 +58,6 @@ export default {
     contactTitle: "Let’s connect.",
     contactText:
       "For conversations about my experience, projects, and digital solutions.",
-    email: "Email me",
     footer: "Personal CV & portfolio",
     statusNote: "",
     ongoingWebsite: "Live foundation · expanding the CV and portfolio",
