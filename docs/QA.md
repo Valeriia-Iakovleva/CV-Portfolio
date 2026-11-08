@@ -75,3 +75,28 @@ This follow-up validates the current PR branch without merging or deploying it.
 - Browser logs inspected during this review contained extension-origin metadata errors, with no site-origin warning/error entries.
 
 The earlier print, no-JavaScript, and reduced-motion results above are from the preceding maintenance review; they were not rerun in this follow-up. HTML/accessibility markup validation is not a complete WCAG conformance assessment. Screen readers, Safari, Firefox, and physical devices remain untested. No design or career-content changes were made in this follow-up.
+
+## Final branch review and repeatable artifact downloads — 8 November 2026
+
+Started from the newer branch commit `7317f0f` after fetching PR #2; preserved its HTML validator, instant redirect, and artifact work. PR #2 was open and draft, based on unchanged `main` commit `13ba78f`. The website and confirmed content needed no further changes after this review.
+
+### Changes made
+
+- Review artifact names now include the run attempt: `cv-review-<run ID>-<attempt>`. Rerunning checks creates a distinct review bundle instead of colliding with an immutable artifact from the preceding attempt. Retention remains 14 days.
+- The job summary links directly to the artifact. The README explains how to serve the extracted `dist/` under `/CV-Portfolio/` with Python 3.
+- Both the Pages artifact and deploy job are now explicitly restricted to `main` and excluded from pull-request events. PRs still automatically install, check, build, validate HTML, and upload the tested review bundle.
+- Added current [768px Ukrainian tablet](screenshots/tablet-uk.png) and [320px Polish narrow layout](screenshots/narrow-pl.png) screenshots. Earlier screenshots were recaptured and remained unchanged.
+
+### Tests performed again on the current source
+
+- `npm ci` from the committed lockfile; Node 24.22.1 / npm 11.9.0. No dependency changes were needed in this review.
+- `npm run check`: zero errors, warnings, or hints. `npm run build`, `npm run test:site`, and `npm run test:html` passed. All four generated pages pass HTML standard, accessibility markup, and document checks with zero warnings allowed.
+- Chromium 156 and Playwright: all 12 language/viewport combinations (English, Polish, Ukrainian × 320, 390, 768, 1440px) passed document overflow, language metadata, active-language state, minimum 44px language/section targets, career-history rendering, and keyboard disclosure checks. Screenshots at all 12 combinations were visually inspected for readability, wrapping, margins, and hierarchy; representative open project disclosures were also inspected.
+- The root route redirects instantly to English. Every section-nav link reaches its matching hash. Language switching preserves `#projects` across all three locales. The built-site check verifies local scripts, styles, favicon, links, IDs, and base paths. Browser requests recorded no failed assets or page errors.
+- Sequential Tab navigation traversed 21 controls per locale with visible outlines. First Tab reaches the skip link; Enter focuses `main`. All three project disclosures open with Enter and close with Space. No-JavaScript language links and disclosures work, and the optional print button stays hidden. Its enabled click calls `window.print()`. Reduced-motion scrolling remains automatic.
+- Axe-core 4.14.0 was run from temporary tooling outside the repository, on all 12 combinations with disclosures open, against WCAG 2 A/AA, WCAG 2.1 A/AA, and best-practice rules. It reported no violations. Four decorative glyph spans per page required manual colour-contrast review; they are `aria-hidden`, while adjacent link/status text conveys the meaning. These incomplete results were reviewed rather than counted as automatic passes.
+- Calculated solid-colour contrast ratios: charcoal/paper **14.55:1**, secondary text/paper **5.95:1**, orange/paper **5.02:1**, orange/apricot **4.61:1**, white/orange button **5.13:1**, and secondary text/tag background **5.29:1**. All tested normal-text pairs exceed 4.5:1. This is not a complete accessibility conformance claim.
+- Print-button wiring and print media were retested. English, Polish, and Ukrainian PDFs each contain three A4 pages, with project summaries/evidence and contact retained and controls/disclosures hidden. All PDF text was checked for content/page boundaries and personal contact details; representative rasterized PDF pages in each language were visually inspected. Physical printing was not tested.
+- Source, output, changed files, and screenshot content were reviewed for privacy. No personal contact details, private CV files, employer screenshots, or confidential artifacts are included. Contact remains GitHub-only. The new commit uses the established GitHub noreply identity; career facts, project statuses, and existing PR evidence were preserved.
+
+Axe and browser fixtures remain temporary environment tools, not project dependencies. Screen-reader testing, Firefox, Safari, physical devices/printers, and a full WCAG audit remain unperformed. Translation/editorial and factual-review items already documented above remain with the owner. The final Actions run and downloadable artifact are linked in PR #2; verify the run's head SHA when reviewing a bundle. No merge or production deployment is part of this work.

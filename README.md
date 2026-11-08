@@ -60,7 +60,17 @@ The Print / save as PDF button uses browser printing. Print CSS sets A4 margins,
 
 The site is hosted at https://valeriia-iakovleva.github.io/CV-Portfolio/ . `astro.config.mjs` defines the origin, `/CV-Portfolio` base, and trailing slashes. Update the configuration and regression-check expectations together if moving it.
 
-`.github/workflows/pages.yml` installs with `npm ci`, checks types, builds, checks the generated site, and validates HTML on PRs and `main`. PR and feature-branch manual runs upload a `cv-review-<run ID>` artifact containing `dist/`, QA notes, and the committed screenshots for 14 days. Download it from the Actions run page; it is a review bundle, not a hosted preview. Serve its `dist/` under `/CV-Portfolio/` to retain correct asset paths. PRs do not upload a Pages artifact or deploy. The deploy job runs only for `main`, with Pages and identity write permissions confined to that job; the build needs only repository read access. Manual workflow runs on feature branches cannot deploy. Pages must be configured to use GitHub Actions.
+`.github/workflows/pages.yml` installs with `npm ci`, checks types, builds, checks the generated site, and validates HTML on PRs and `main`. PR and feature-branch manual runs upload a `cv-review-<run ID>-<attempt>` artifact containing `dist/`, QA notes, and the committed screenshots for 14 days. The attempt suffix prevents naming collisions when rerunning checks. Download it from the Actions run page or the job summary; it is a review bundle, not a hosted preview. To view an extracted bundle locally with Python 3:
+
+```sh
+mkdir -p preview/CV-Portfolio
+cp -R dist/. preview/CV-Portfolio/
+python3 -m http.server 8080 --directory preview
+```
+
+Open `http://localhost:8080/CV-Portfolio/`; the directory prefix preserves the production asset paths.
+
+PRs do not upload a Pages artifact or deploy. The deploy job runs only for `main`, with Pages and identity write permissions confined to that job; the build needs only repository read access. Manual workflow runs on feature branches cannot deploy. Pages must be configured to use GitHub Actions.
 
 Source on a review branch is not live until merged and successfully deployed. Review this CV expansion before merging; no merge or production deployment is part of the maintenance work.
 

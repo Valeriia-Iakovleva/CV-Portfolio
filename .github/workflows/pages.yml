@@ -33,10 +33,11 @@ jobs:
       - run: npm run test:site
       - run: npm run test:html
       - name: Upload tested branch output
+        id: review-artifact
         if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: cv-review-${{ github.run_id }}
+          name: cv-review-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             dist/
             docs/QA.md
@@ -44,6 +45,8 @@ jobs:
           retention-days: 14
           if-no-files-found: error
       - name: Write review summary
+        env:
+          REVIEW_ARTIFACT_URL: ${{ steps.review-artifact.outputs.artifact-url }}
         if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
         run: |
           cat <<'MARKDOWN' >> "$GITHUB_STEP_SUMMARY"
@@ -53,8 +56,9 @@ jobs:
           - This run does not merge the PR or deploy the branch to production.
           - Automated checks are not a complete WCAG audit; manual testing limits are recorded in docs/QA.md.
           MARKDOWN
+          printf '\n[Download the tested review bundle](%s)\n' "$REVIEW_ARTIFACT_URL" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-pages-artifact@v5
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           path: dist
 
