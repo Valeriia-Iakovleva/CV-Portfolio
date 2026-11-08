@@ -1,19 +1,17 @@
 # CV-Portfolio
 
-Valeriia Iakovleva’s personal CV–portfolio. This first step provides a static Astro foundation with TypeScript and ordinary CSS, a shared layout, and English, Polish, and Ukrainian introductions. It does not yet include full CV or project sections.
+Valeriia Iakovleva’s personal CV–portfolio, built with Astro, TypeScript, and ordinary CSS. It presents work experience, selected completed and ongoing projects, education, skills, languages, and professional contact details in English, Polish, and Ukrainian.
 
 ## Development
 
-Requires Node.js 22.12+ (Node.js 24 LTS recommended) and npm.
-
-In restricted cloud shells, run `export ASTRO_TELEMETRY_DISABLED=1` before Astro commands to avoid writing telemetry settings outside the workspace.
+Requires Node.js 22.12+; Node.js 24 is used in CI. Use npm with the committed lockfile.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-The site uses `/CV-Portfolio/` as its base path. The root redirects to `/CV-Portfolio/en/`; the language switcher links to `en/`, `pl/`, and `uk/` within that base path.
+Use the address returned by the environment’s preview mechanism. A localhost address works only when your browser can reach the machine hosting the server; it is not automatically accessible from a cloud task. The site base is `/CV-Portfolio/` and the entry leads to `/CV-Portfolio/en/`.
 
 ```sh
 npm run check
@@ -21,28 +19,37 @@ npm run build
 npm run preview
 ```
 
-`check` validates Astro and TypeScript. `build` generates static output in `dist/`. GitHub Pages must serve that output under `/CV-Portfolio/`; the GitHub Actions workflow in `.github/workflows/pages.yml` checks pull requests and deploys successful builds from `main`.
+`check` validates Astro and TypeScript. `build` generates four static pages in `dist/`: the entry and three language versions. The introduction, CV content, navigation, and native project disclosures work without client JavaScript. A small optional script enables printing/saving as PDF and preserves the current section when switching languages.
 
-## Structure
+## Content and components
 
-- `src/content/en.ts`, `pl.ts`, `uk.ts`: translated text, checked against `types.ts`.
-- `src/content/profile.ts`: shared name, official job title, employer, and GitHub URL.
-- `src/pages/`: root redirect and the template generating three language pages.
-- `src/layouts/`: shared document structure and metadata.
-- `src/components/`: language navigation.
-- `src/styles/global.css`: ordinary CSS; edit the `:root` variables for colours.
-- `public/images/`: future static images.
+- `src/content/profile.ts`: shared facts, employment dates, links, project status, and tool names. Employment periods do not imply the date of a promotion.
+- `src/content/en.ts`, `pl.ts`, `uk.ts`: translated text matching `types.ts`. Dates use the selected locale.
+- `src/content/types.ts`: shared content contracts and IDs.
+- `src/components/ExperienceList.astro`: reusable career history.
+- `src/components/ProjectEntry.astro`: project status, native details, and real source/PR links.
+- `src/components/SectionHeading.astro`, `Arrow.astro`, and `LanguageSwitcher.astro`: shared UI.
+- `src/pages/[lang]/index.astro`: one page template for all languages.
+- `src/layouts/BaseLayout.astro`: metadata, navigation, footer, and progressive enhancements.
+- `src/styles/global.css`: shared colours, typography, responsive and print layouts.
+- `docs/content-review.md`: evidence boundaries and details awaiting the owner's review.
 
-Typography currently uses system Georgia and Arial/Helvetica, without external font downloads. Review translations and typography before expanding the site.
+System Georgia and Arial/Helvetica stacks support Latin and Cyrillic without external font requests. Print styles produce a condensed CV; use the Print / save as PDF button or the browser's own print command. No outdated PDF is presented as a current downloadable CV.
 
-## Preview this checkpoint
+## Editing
 
-After `npm run dev`, open `http://localhost:4321/CV-Portfolio/` in your local browser. To inspect production output, run `npm run build` followed by `npm run preview`, and use the same path. Switch languages using the header links; no client-side JavaScript is required.
+Keep facts and translated wording separate. Add work-history records and status/link facts in `profile.ts`, update the associated IDs in `types.ts`, and supply copy in all three language files. The shared page and components render the additions without copying entire pages.
 
-This checkpoint contains only an introduction and GitHub profile link. The official job title and name remain unchanged across languages. On mobile, the wordmark sits above right-aligned language navigation to keep every link readable.
+Project links are rendered only for real artifacts. Internal professional work is described at a high level; the website's own repository and merged PR provide public technical evidence. Confirm completion status before changing an in-progress project to implemented. Do not introduce fictional metrics or employer screenshots.
 
-## GitHub Pages deployment
+## GitHub Pages
 
-In repository Settings → Pages, choose **GitHub Actions** as the source. Pull requests run type checks and a production build; merging to `main` builds and deploys `dist/` using GitHub’s Pages artifact workflow. Deployment can also be requested manually from Actions on `main`.
+`.github/workflows/pages.yml` runs checks and the build on PRs. Successful builds on `main` deploy `dist/` using GitHub Pages. Pages is configured to use GitHub Actions.
 
-The configured destination is `https://valeriia-iakovleva.github.io/CV-Portfolio/`. The root leads to English, with Polish and Ukrainian available through ordinary links. The destination is live only after a successful Pages deployment.
+The deployment destination is https://valeriia-iakovleva.github.io/CV-Portfolio/ . The source in a review branch is not live until merged and successfully deployed. The current expansion should be reviewed before merging.
+
+The Astro base, internal links, language alternates, canonical metadata, and favicon use `/CV-Portfolio/`. If moving the repository or changing domains, update the configuration and verify generated URLs.
+
+## Verification
+
+Astro/TypeScript checks and production build pass. Browser checks cover language switching, preserved section anchors, native project disclosures, desktop rendering, and narrow layouts in all languages. `docs/QA.md` records results and limits.

@@ -1,0 +1,25 @@
+---
+import { experience, formatPeriod } from '../content/profile';
+import type { Language, PortfolioContent } from '../content/types';
+interface Props { language: Language; content: PortfolioContent; }
+const { language, content } = Astro.props;
+---
+<div class="experience-list">
+  {experience.map((role, index) => {
+    const copy = content.experience[role.id];
+    return <article class="experience-entry">
+      <div class="experience-meta">
+        <p class="date">{formatPeriod(role.start, role.end, language, content.ui.present)}</p>
+        <p class="company">{role.employer}</p>
+        {index === 0 && <span class="status-label">{content.ui.current}</span>}
+        {role.id === 'epam' && <span class="internship-label">{content.ui.duration}</span>}
+      </div>
+      <div class="experience-copy">
+        <h3>{role.title}</h3><p class="role-summary">{copy.summary}</p>
+        {copy.note && <p class="role-note">{copy.note}</p>}
+        {copy.bullets.length > 0 && <ul>{copy.bullets.map(bullet => <li>{bullet}</li>)}</ul>}
+        {role.tools.length > 0 && <ul class="tags" aria-label={content.ui.skillsTitle}>{role.tools.map(tool => <li>{tool}</li>)}</ul>}
+      </div>
+    </article>;
+  })}
+</div>

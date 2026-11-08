@@ -1,0 +1,37 @@
+---
+import Arrow from './Arrow.astro';
+import { profile, projectFacts } from '../content/profile';
+import type { Language, PortfolioContent, ProjectId } from '../content/types';
+interface Props { id: ProjectId; content: PortfolioContent; language: Language; }
+const { id, content, language } = Astro.props;
+const copy = content.projects[id];
+const facts = projectFacts.find(project => project.id === id)!;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<article class="project-entry" id={`project-${id}`}>
+  <div class="project-header">
+    <p class="eyebrow">{copy.context}</p>
+    <span class:list={['project-status', { completed: facts.status === 'completed' }]}>
+      <span aria-hidden="true">{facts.status === 'completed' ? '✓' : '◌'}</span>
+      {facts.status === 'completed' ? content.ui.completed : content.ui.inProgress}
+    </span>
+  </div>
+  <h3>{copy.title}</h3>
+  <p class="project-summary">{copy.summary}</p>
+  {id === 'portfolio' && <p class="live-note">{content.ui.ongoingWebsite}</p>}
+  <ul class="tags" aria-label={content.ui.skillsTitle}>{facts.tools.map(tool => <li>{tool}</li>)}</ul>
+  <details class="project-details">
+    <summary>{content.ui.details}<span class="details-icon" aria-hidden="true"></span></summary>
+    <div class="case-study">
+      <h4>{content.ui.problem}</h4><p>{copy.problem}</p>
+      <h4>{content.ui.contribution}</h4><ul>{copy.contribution.map(item => <li>{item}</li>)}</ul>
+      <h4>{content.ui.outcome}</h4><p>{copy.outcome}</p>
+      <h4>{content.ui.scope}</h4><p>{copy.limitation}</p>
+    </div>
+  </details>
+  {facts.repo && <div class="project-links">
+    <a href={facts.repo}>{content.ui.viewSource}<Arrow /></a>
+    <a href={profile.foundationPR}>{content.ui.viewPR} #1<Arrow /></a>
+    <a href={`${base}/${language}/`}>{content.ui.viewLive}<Arrow /></a>
+  </div>}
+</article>
