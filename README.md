@@ -1,48 +1,76 @@
 # CV-Portfolio
 
-Valeriia Iakovleva’s personal CV–portfolio. This first step provides a static Astro foundation with TypeScript and ordinary CSS, a shared layout, and English, Polish, and Ukrainian introductions. It does not yet include full CV or project sections.
+Valeriia Iakovleva’s personal CV–portfolio: work experience, implemented and ongoing projects, education, skills, and GitHub contact in English, Polish, and Ukrainian. Built with Astro, TypeScript, and ordinary CSS; deployed as static files on GitHub Pages.
 
 ## Development
 
-Requires Node.js 22.12+ (Node.js 24 LTS recommended) and npm.
-
-In restricted cloud shells, run `export ASTRO_TELEMETRY_DISABLED=1` before Astro commands to avoid writing telemetry settings outside the workspace.
+Use Node.js 24 (`.nvmrc`, also used in CI) and npm with the committed lockfile. The installed Astro version requires Node.js 22.23.4 or later; `package.json` records that minimum.
 
 ```sh
+nvm use                   # optional, if nvm is installed
 npm ci
 npm run dev
 ```
 
-The site uses `/CV-Portfolio/` as its base path. The root redirects to `/CV-Portfolio/en/`; the language switcher links to `en/`, `pl/`, and `uk/` within that base path.
+Open the printed development address under `/CV-Portfolio/`. That entry redirects to `/CV-Portfolio/en/`; `/pl/` and `/uk/` are the other language routes beneath the same base. Cloud environments may require their own forwarded preview address.
 
 ```sh
-npm run check
-npm run build
-npm run preview
+npm run check             # Astro and TypeScript diagnostics
+npm run build             # generate dist/
+npm run test:site         # check the generated output; run after building
+npm run test:html         # validate HTML and accessibility markup
+npm run preview           # serve the production build
 ```
 
-`check` validates Astro and TypeScript. `build` generates static output in `dist/`. GitHub Pages must serve that output under `/CV-Portfolio/`; the GitHub Actions workflow in `.github/workflows/pages.yml` checks pull requests and deploys successful builds from `main`.
+The project has no remote fonts or client framework. System Georgia and Arial/Helvetica stacks support Latin and Cyrillic. Navigation, CV content, and native project disclosures work without JavaScript. The optional script exposes the print button and preserves the section anchor across language switches, including copied language links.
 
-## Structure
+## Structure and content
 
-- `src/content/en.ts`, `pl.ts`, `uk.ts`: translated text, checked against `types.ts`.
-- `src/content/profile.ts`: shared name, official job title, employer, and GitHub URL.
-- `src/pages/`: root redirect and the template generating three language pages.
-- `src/layouts/`: shared document structure and metadata.
-- `src/components/`: language navigation.
-- `src/styles/global.css`: ordinary CSS; edit the `:root` variables for colours.
-- `public/images/`: future static images.
+- `src/content/profile.ts`: shared facts, official job titles, dates, tools, project statuses, and evidence URLs.
+- `src/content/types.ts`: supported locales, content IDs, and contracts for facts and translated copy.
+- `src/content/en.ts`, `pl.ts`, `uk.ts`: translated wording; facts stay shared. Dates use the selected locale.
+- `src/pages/[lang]/index.astro`: one page template for all three languages; `src/pages/index.astro` redirects to English.
+- `src/layouts/BaseLayout.astro`: metadata, navigation, footer, and progressive enhancements.
+- `src/components/`: career history, project entries, section headings, language navigation, and the decorative arrow.
+- `src/styles/global.css`: palette, typography, responsive rules, focus states, and print layout.
+- `scripts/check-site.mjs`: dependency-free regression checks against the built pages.
+- `docs/`: content boundaries, readable CV draft, verification notes, and actual browser screenshots.
 
-Typography currently uses system Georgia and Arial/Helvetica, without external font downloads. Review translations and typography before expanding the site.
+### Add experience or skills
 
-## Preview this checkpoint
+Add an experience ID to `types.ts`, its facts to `experience` in `profile.ts`, and matching copy to all three translations. Keep official job titles shared. An `end` of `null` marks a current role; employment dates do not establish the date of a promotion. Add shared tool names to the relevant record or `skillTools`, and translate explanatory wording separately.
 
-After `npm run dev`, open `http://localhost:4321/CV-Portfolio/` in your local browser. To inspect production output, run `npm run build` followed by `npm run preview`, and use the same path. Switch languages using the header links; no client-side JavaScript is required.
+### Add projects or evidence
 
-This checkpoint contains only an introduction and GitHub profile link. The official job title and name remain unchanged across languages. On mobile, the wordmark sits above right-aligned language navigation to keep every link readable.
+Add a project ID to `types.ts`, one `projectFacts` record, and matching `projects` copy in all three language files. The page groups projects from the shared `status` value (`completed` or `in-progress`); do not duplicate the grouping in the template. Confirm implementation before changing status.
 
-## GitHub Pages deployment
+Set `repo`, `pullRequest`, and `live` to real public URLs, or `null` when there is no public artifact. Each link renders independently. The live link points to production even when viewing a development preview. Internal professional work remains a high-level summary without fabricated source, metrics, or employer screenshots. A merged PR is evidence for its project, not a separate achievement.
 
-In repository Settings → Pages, choose **GitHub Actions** as the source. Pull requests run type checks and a production build; merging to `main` builds and deploys `dist/` using GitHub’s Pages artifact workflow. Deployment can also be requested manually from Actions on `main`.
+Contact is GitHub-only. Do not add personal phone numbers, email addresses, private CV files, employer data, credentials, or local configuration. Use a GitHub privacy-safe noreply identity for commits. Review notes in `docs/content-review.md` and `docs/cv-draft-review.md` retain the content boundaries and owner review items.
 
-The configured destination is `https://valeriia-iakovleva.github.io/CV-Portfolio/`. The root leads to English, with Polish and Ukrainian available through ordinary links. The destination is live only after a successful Pages deployment.
+## Validation and print
+
+`test:html` validates all generated pages against html-validate’s standard, accessibility, and document presets, with zero warnings allowed. Integrity checks apply to cross-origin resources. This is markup validation, not a complete WCAG audit.
+
+`test:site` checks the instant English redirect, locale pages and active navigation, matching official titles, unique IDs, local link targets, section anchors, base-prefixed scripts/styles/favicon, and absence of email addresses or personal contact URLs in source and output. It does not replace browser, accessibility, translation, or external-link review.
+
+The Print / save as PDF button uses browser printing. Print CSS sets A4 margins, keeps project summaries and evidence links, hides controls and detailed case studies, and avoids splitting individual roles or the contact section. No generated PDF is committed as a current downloadable CV. Browser/PDF results and screenshots are recorded in [docs/QA.md](docs/QA.md).
+
+## GitHub Pages
+
+The site is hosted at https://valeriia-iakovleva.github.io/CV-Portfolio/ . `astro.config.mjs` defines the origin, `/CV-Portfolio` base, and trailing slashes. Update the configuration and regression-check expectations together if moving it.
+
+`.github/workflows/pages.yml` installs with `npm ci`, checks types, builds, checks the generated site, and validates HTML on PRs and `main`. PR and feature-branch manual runs upload a `cv-review-<run ID>-<attempt>` artifact containing `dist/`, QA notes, and the committed screenshots for 14 days. The attempt suffix prevents naming collisions when rerunning checks. Download it from the Actions run page or the job summary; it is a review bundle, not a hosted preview. To view an extracted bundle locally with Python 3:
+
+```sh
+mkdir -p preview/CV-Portfolio
+cp -R dist/. preview/CV-Portfolio/
+python3 -m http.server 8080 --directory preview
+```
+
+Open `http://localhost:8080/CV-Portfolio/`; the directory prefix preserves the production asset paths.
+
+PRs do not upload a Pages artifact or deploy. The deploy job runs only for `main`, with Pages and identity write permissions confined to that job; the build needs only repository read access. Manual workflow runs on feature branches cannot deploy. Pages must be configured to use GitHub Actions.
+
+Source on a review branch is not live until merged and successfully deployed. Review this CV expansion before merging; no merge or production deployment is part of the maintenance work.
+

@@ -4,3 +4,17 @@ dist/
 .env
 .env.*
 !.env.example
+
+# Local credentials, tooling, and temporary output
+*.log
+*.tsbuildinfo
+.DS_Store
+.idea/
+.vscode/
+.npm/
+.cache/
+work/
+.envrc
+*.pem
+*.key
+.npmrc

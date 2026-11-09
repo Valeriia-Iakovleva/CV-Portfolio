@@ -1,4 +1,6 @@
 ---
 const englishPath = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/en/`;
-return Astro.redirect(englishPath, 302);
+return Astro.redirect(englishPath, 301);
 ---
+
+

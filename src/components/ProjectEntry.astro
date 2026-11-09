@@ -1,0 +1,35 @@
+---
+import Arrow from './Arrow.astro';
+import type { PortfolioContent, ProjectFact } from '../content/types';
+interface Props { facts: ProjectFact; content: PortfolioContent; }
+const { facts, content } = Astro.props;
+const { id } = facts;
+const copy = content.projects[id];
+---
+<article class="project-entry" id={`project-${id}`}>
+  <div class="project-header">
+    <p class="eyebrow">{copy.context}</p>
+    <span class:list={['project-status', { completed: facts.status === 'completed' }]}>
+      <span aria-hidden="true">{facts.status === 'completed' ? '✓' : '◌'}</span>
+      {facts.status === 'completed' ? content.ui.completed : content.ui.inProgress}
+    </span>
+  </div>
+  <h3>{copy.title}</h3>
+  <p class="project-summary">{copy.summary}</p>
+  {id === 'portfolio' && <p class="live-note">{content.ui.ongoingWebsite}</p>}
+  <ul class="tags" aria-label={content.ui.skillsTitle}>{facts.tools.map(tool => <li>{tool}</li>)}</ul>
+  <details class="project-details">
+    <summary>{content.ui.details}<span class="details-icon" aria-hidden="true"></span></summary>
+    <div class="case-study">
+      <h4>{content.ui.problem}</h4><p>{copy.problem}</p>
+      <h4>{content.ui.contribution}</h4><ul>{copy.contribution.map(item => <li>{item}</li>)}</ul>
+      <h4>{content.ui.outcome}</h4><p>{copy.outcome}</p>
+      <h4>{content.ui.scope}</h4><p>{copy.limitation}</p>
+    </div>
+  </details>
+  {(facts.repo || facts.pullRequest || facts.live) && <div class="project-links">
+    {facts.repo && <a href={facts.repo}>{content.ui.viewSource}<Arrow /></a>}
+    {facts.pullRequest && <a href={facts.pullRequest}>{content.ui.viewPR} #{facts.pullRequest.split('/').at(-1)}<Arrow /></a>}
+    {facts.live && <a href={facts.live}>{content.ui.viewLive}<Arrow /></a>}
+  </div>}
+</article>

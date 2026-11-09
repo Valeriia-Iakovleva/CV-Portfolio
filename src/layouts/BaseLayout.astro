@@ -1,4 +1,5 @@
 ---
+import Arrow from '../components/Arrow.astro';
 import '../styles/global.css';
 import { profile } from '../content/profile';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
@@ -6,25 +7,49 @@ import { languages, type Language, type PortfolioContent } from '../content/type
 interface Props { language: Language; content: PortfolioContent }
 const { language, content } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentURL = new URL(`${base}/${language}/`, Astro.site);
 ---
 <!doctype html>
 <html lang={language}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={content.description} />
+    <meta name="theme-color" content="#FFFCF7" />
     <title>{content.title}</title>
-    {languages.map((locale) => (
-      <link rel="alternate" hreflang={locale} href={new URL(`${base}/${locale}/`, Astro.site)} />
-    ))}
+    <link rel="canonical" href={currentURL} />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <meta property="og:title" content={content.title} />
+    <meta property="og:description" content={content.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentURL} />
+    {languages.map(locale => <link rel="alternate" hreflang={locale} href={new URL(`${base}/${locale}/`, Astro.site)} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(`${base}/en/`, Astro.site)} />
   </head>
   <body>
+    <a class="skip-link" href="#main">{content.ui.skip}</a>
     <div class="page">
       <header class="site-header">
-        <span class="wordmark">{profile.name}</span>
+        <a class="wordmark" href={`${base}/${language}/`}>{profile.name}<span aria-hidden="true">.</span></a>
         <LanguageSwitcher currentLanguage={language} label={content.languageNavigation} />
       </header>
-      <main id="main"><slot /></main>
+      <nav class="section-nav" aria-label={content.introductionLabel}>
+        <a href="#experience">{content.nav.experience}</a><a href="#projects">{content.nav.projects}</a>
+        <a href="#about">{content.nav.about}</a><a href="#contact">{content.nav.contact}</a>
+      </nav>
+      <main id="main" tabindex="-1"><slot /></main>
+      <footer class="site-footer"><p>{profile.name} <span aria-hidden="true">/</span> {content.ui.footer}</p><a href={profile.repository}>{content.ui.viewSource}<Arrow /></a></footer>
     </div>
+    <script>
+      const printButton = document.querySelector<HTMLButtonElement>('[data-print]');
+      if (printButton) { printButton.hidden = false; printButton.addEventListener('click', () => window.print()); }
+      const syncLanguageAnchors = () => {
+        document.querySelectorAll<HTMLAnchorElement>('.language-list a').forEach(link => {
+          link.hash = window.location.hash;
+        });
+      };
+      syncLanguageAnchors();
+      window.addEventListener('hashchange', syncLanguageAnchors);
+    </script>
   </body>
 </html>
